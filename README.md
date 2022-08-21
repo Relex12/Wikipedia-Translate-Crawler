@@ -14,13 +14,22 @@ Check out on GitHub
 
 ## Summary
 
-[toc]
+* [Wikipedia Translate Crawler](#wikipedia-translate-crawler)
+    * [Summary](#summary)
+    * [What it is](#what-it-is)
+    * [How to run](#how-to-run)
+    * [Script behavior](#script-behavior)
+    * [CLI arguments](#cli-arguments)
+    * [Known issues and risky behaviors](#known-issues-and-risky-behaviors)
+    * [License](#license)
+
+<!-- table of contents created by Adrian Bonnet, see https://Relex12.github.io/Markdown-Table-of-Contents for more -->
 
 ## What it is
 
 This crawler will search for all pages related to a topic on Wikipedia in a certain language called source language, let's say English, and for each related page it will check how good is the translated page in another language called target language, let's say French.
 
-For example, if you know a lot about Computer Science and you want to improve Wikipedia pages related to CS in French, you can use the script to which pages related to the topic have bad translation and can be considered a priority.
+For example, if you know a lot about Computer Science and you want to improve Wikipedia pages related to CS in French, you can use the script to know which pages related to the topic have bad translation and can be considered a priority.
 
 Basically, this script is meant to be used when you want to contribute to Wikipedia by translating pages.
 
@@ -38,13 +47,13 @@ cd Wikipedia-Translate-Crawler
 
 At first, the script is checking for Internet connection, the options and the existence of both source and translated pages (i.e the page you give as an argument and it's translated version) and then create a workspace with the name of the source page.
 
-* Step one is downloading all pages that might be necessary, two subdirectories will be created for both the source and target languages, and will be removed at the end of the script
+* Step one is downloading all pages that might be necessary, two subdirectories will be created for both the source and target languages, and will be removed at the end of the script.
 * Step two is processing pages, that means each page is cropped to get only its content.
 * Step three is gathering data, which consist of computing and comparing a score for each couple of source and translated pages.
 
 The output is written in a sorted CSV file, where the first column is the score of page's translation, then the name of the source page, the URL of the translated page, and additional information about quality tags of the translated page.
 
-This CSV file is also written to stdout with fancy colors depending on the score ratio and quality tags of the translated page.
+This CSV file is also written to stdout with fancy colors depending on the score and quality tags of the translated page.
 
 The score is calculated according to this pseudo-code:
 
@@ -54,7 +63,7 @@ for i in [<a>, <img>, <h2>, <h3>]
 	score = score + N_src(i)/( N_trg(i)+1 )
 ```
 
-where `N_src` and `N_trg` are respectively the number of the current tag in the source page and the target page.
+where `N_src` and `N_trg` are respectively the number of occurrences of the current tag in the source page and the translated page.
 
 ## CLI arguments
 
